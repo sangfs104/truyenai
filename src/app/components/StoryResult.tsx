@@ -7,8 +7,8 @@ export default function StoryResult({ story }: { story: string }) {
     );
   }
 
-  const titleMatch = story.match(/<TIEUDE>(.*?)<\/TIEUDE>/s);
-  const contentMatch = story.match(/<NOIDUNG>(.*?)<\/NOIDUNG>/s);
+  const titleMatch = story.match(/<TIEUDE>([\s\S]*?)<\/TIEUDE>/);
+  const contentMatch = story.match(/<NOIDUNG>([\s\S]*?)<\/NOIDUNG>/);
 
   const title = titleMatch ? titleMatch[1].trim() : "Câu chuyện";
   const content = contentMatch ? contentMatch[1].trim() : story;
