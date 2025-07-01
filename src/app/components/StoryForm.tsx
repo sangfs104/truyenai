@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import StoryResult from "./StoryResult";
 
 export default function StoryForm() {
@@ -14,9 +13,6 @@ export default function StoryForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    const toastId = toast.loading("🪄 Đang tạo truyện...");
-
     try {
       const res = await fetch("/api/generate-story", {
         method: "POST",
@@ -25,21 +21,9 @@ export default function StoryForm() {
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.error || "❌ Đã xảy ra lỗi.", { id: toastId });
-        setStory("");
-        return;
-      }
-
-      if (data.story) {
-        setStory(data.story);
-        toast.success("✅ Đã tạo xong truyện!", { id: toastId });
-      }
+      if (data.story) setStory(data.story);
     } catch {
-      toast.error("❌ Không thể tạo truyện. Vui lòng thử lại.", {
-        id: toastId,
-      });
+      alert("Lỗi khi tạo truyện.");
     } finally {
       setLoading(false);
     }
