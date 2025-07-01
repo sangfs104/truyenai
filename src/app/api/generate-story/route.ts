@@ -91,7 +91,7 @@ Chỉ xuất kết quả dưới định dạng sau – KHÔNG kèm lời giải
 
     if (moderationRes.data.results[0].flagged) {
       return NextResponse.json(
-        { error: '❌ Nội dung đầu vào vi phạm chính sách của OpenAI.' },
+        { error: '❌ Nội dung đầu vào vi phạm nguyên tắc cộng đồng' },
         { status: 400 }
       );
     }
