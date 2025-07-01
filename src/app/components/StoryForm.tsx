@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import StoryResult from "./StoryResult";
+import { toast } from "react-hot-toast";
 
-export default function StoryForm() {
+/*******  3a997d21-02be-4b20-a222-9213066d7656  *******/ export default function StoryForm() {
   const [idea, setIdea] = useState("");
   const [genre, setGenre] = useState("");
   const [length, setLength] = useState("4000");
@@ -21,9 +22,19 @@ export default function StoryForm() {
       });
 
       const data = await res.json();
-      if (data.story) setStory(data.story);
+
+      if (!res.ok) {
+        // Nếu API trả lỗi (ví dụ chứa nội dung vi phạm)
+        toast.error(data.error || "🚫 Đã xảy ra lỗi không xác định.", {
+          position: "top-right",
+        });
+      } else if (data.story) {
+        setStory(data.story);
+      }
     } catch {
-      alert("Lỗi khi tạo truyện.");
+      toast.error("🚫 Lỗi kết nối tới máy chủ.", {
+        position: "top-right",
+      });
     } finally {
       setLoading(false);
     }
